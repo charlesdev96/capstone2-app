@@ -56,7 +56,7 @@ jobs:
           build-args: SERVICE=${{ matrix.service }}
           tags: ghcr.io/${{ steps.image.outputs.owner }}/gitops-shop-${{ matrix.service }}:${{ github.sha }}
       - name: Scan image with Trivy
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ghcr.io/${{ steps.image.outputs.owner }}/gitops-shop-${{ matrix.service }}:${{ github.sha }}
           format: table
@@ -80,7 +80,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/gitops-shop-config
+          repository: ${{ github.repository_owner }}/capstone2-config
           token: ${{ secrets.CONFIG_REPO_TOKEN }}
           path: config
       - name: Update staging image tags

@@ -38,6 +38,6 @@ docker build --build-arg SERVICE=payments -t gitops-shop-payments:local .
 The Dockerfile is multi-stage (`builder` and `runner`); the final image contains production dependencies only and runs as the non-root `node` user.
 
 ## CI/CD
-The workflow runs lint, tests and `npm audit` for pushes and pull requests. On pushes to `main`, it builds each image once locally, scans it with Trivy, pushes the scanned image to GHCR, then updates staging image tags in `gitops-shop-config`.
+The workflow runs lint, tests and `npm audit` for pushes and pull requests. On pushes to `main`, it builds each image once locally, scans it with Trivy, pushes the scanned image to GHCR, then updates the image tags for staging and production in `capstone2-config`. Argo CD auto-syncs staging; production shows OutOfSync until you sync it manually.
 
-Add a repository secret `CONFIG_REPO_TOKEN`: a fine-grained GitHub PAT with Contents read/write access to `gitops-shop-config`. The built-in `GITHUB_TOKEN` is used for GHCR publishing. The workflow assumes both repositories are owned by the same GitHub account.
+Add a repository secret `CONFIG_REPO_TOKEN`: a fine-grained GitHub PAT with Contents read/write access to `capstone2-config`. The built-in `GITHUB_TOKEN` is used for GHCR publishing. The workflow assumes both repositories are owned by the same GitHub account.
